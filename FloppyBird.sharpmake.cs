@@ -13,7 +13,7 @@ namespace FloppyBird
 		public FloppyBirdProject()
 		{
 			Name = "FloppyBird";
-			AddTargets(new Target(Platform.win64, DevEnv.vs2019, Optimization.Debug | Optimization.Release));
+			AddTargets(new Target(Platform.win64, DevEnv.vs2019 | DevEnv.vs2022, Optimization.Debug | Optimization.Release));
 			SourceRootPath = BasePath;
 		}
 
@@ -33,6 +33,7 @@ namespace FloppyBird
 			conf.LibraryFiles.Add("d3d12.lib");
 			conf.LibraryFiles.Add("dxgi.lib");
 			conf.LibraryFiles.Add("D3Dcompiler.lib");
+			conf.Options.Add(Options.Vc.Compiler.Exceptions.Enable);
 		}
 	}
 
@@ -42,7 +43,7 @@ namespace FloppyBird
 		public FloppyBirdSolution()
 		{
 			Name = "FloppyBird";
-			AddTargets(new Target(Platform.win64, DevEnv.vs2019, Optimization.Debug | Optimization.Release));
+			AddTargets(new Target(Platform.win64, DevEnv.vs2019 | DevEnv.vs2022, Optimization.Debug | Optimization.Release));
 		}
 
 		[Configure()]
@@ -59,7 +60,8 @@ namespace FloppyBird
 		[Sharpmake.Main]
 		public static void SharpmakeMain(Sharpmake.Arguments arguments)
 		{
-			KitsRootPaths.SetUseKitsRootForDevEnv(DevEnv.vs2019, KitsRootEnum.KitsRoot10, Options.Vc.General.WindowsTargetPlatformVersion.v10_0_19041_0);
+			KitsRootPaths.SetUseKitsRootForDevEnv(DevEnv.vs2019, KitsRootEnum.KitsRoot10, Options.Vc.General.WindowsTargetPlatformVersion.Latest);
+			KitsRootPaths.SetUseKitsRootForDevEnv(DevEnv.vs2022, KitsRootEnum.KitsRoot10, Options.Vc.General.WindowsTargetPlatformVersion.Latest);
 			arguments.Generate<FloppyBirdSolution>();
 		}
 	}
