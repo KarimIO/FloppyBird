@@ -8,6 +8,6 @@ namespace FloppyBird::Gameplay {
         Vector2 velocity;
 
         void OnJump();
-        void Update(double dt);
+        void Update(float dt);
     };
 }

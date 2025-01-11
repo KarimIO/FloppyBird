@@ -4,7 +4,7 @@
 #include <rendering/scene_renderer.hpp>
 #include <utils/logger.hpp>
 
-#ifdef _MSC_VER
+#ifndef _CONSOLE
 int CALLBACK wWinMain(
 	_In_ HINSTANCE hInstance,
 	_In_opt_ HINSTANCE hPrevInstance,
@@ -12,7 +12,8 @@ int CALLBACK wWinMain(
 	_In_ int nShowCmd
 ) {
 #else
-int main(int argc, char** argv) {
+int main() {
+	HINSTANCE hInstance = GetModuleHandle(NULL);
 #endif
 	FloppyBird::Logger::Initialize(std::filesystem::current_path() / "output.log");
 
@@ -48,7 +49,7 @@ int main(int argc, char** argv) {
 		}
 		
 		currentTime = std::chrono::steady_clock::now();
-		double dt = std::chrono::duration<double>(currentTime - lastTime).count();
+		float dt = std::chrono::duration<float>(currentTime - lastTime).count();
 		lastTime = currentTime;
 
 		scene.Update(dt);
@@ -56,4 +57,5 @@ int main(int argc, char** argv) {
 	}
 
 	F_LOG_INFO(FloppyBird::Logger::LogSource::Main, "Floppy Bird closed.");
+	return 0;
 }

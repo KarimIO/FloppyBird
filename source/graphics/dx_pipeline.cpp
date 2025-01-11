@@ -15,10 +15,10 @@ void FloppyBird::Graphics::DX::Pipeline::Initialize(Context* context, const wcha
 	auto device = context->GetDevice();
 	
 	ComPtr<ID3DBlob> vertexShaderBlob;
-	FloppyBird::Utils::ThrowIfFailed(D3DReadFileToBlob(L"../shaders/vertex.cso", &vertexShaderBlob));
+	FloppyBird::Utils::ThrowIfFailed(D3DReadFileToBlob(vertexShader, &vertexShaderBlob));
 
 	ComPtr<ID3DBlob> pixelShaderBlob;
-	FloppyBird::Utils::ThrowIfFailed(D3DReadFileToBlob(L"../shaders/fragment.cso", &pixelShaderBlob));
+	FloppyBird::Utils::ThrowIfFailed(D3DReadFileToBlob(fragmentShader, &pixelShaderBlob));
 
 	D3D12_FEATURE_DATA_ROOT_SIGNATURE featureData = {};
 	featureData.HighestVersion = D3D_ROOT_SIGNATURE_VERSION_1_1;

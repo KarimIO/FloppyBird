@@ -20,7 +20,7 @@ namespace FloppyBird::Rendering {
 		std::array<QuadRenderData, MAX_DRAWABLES> renderData;
 	} quadBuffer;
 
-	size_t currentDrawCount = 0;
+	UINT currentDrawCount = 0;
 }
 
 void FloppyBird::Rendering::Initialize(Graphics::DX::Context& context) {

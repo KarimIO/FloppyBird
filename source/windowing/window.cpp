@@ -18,8 +18,8 @@ FloppyBird::Windowing::Window* FloppyBird::Windowing::Window::Create() {
 
 #endif
 
-void FloppyBird::Windowing::Window::SetOnResizeCallback(std::function<void(uint32_t, uint32_t)> onResizeCallback) {
-	this->onResizeCallback = onResizeCallback;
+void FloppyBird::Windowing::Window::SetOnResizeCallback(std::function<void(uint32_t, uint32_t)> onResizeCallbackToSet) {
+	onResizeCallback = onResizeCallbackToSet;
 }
 
 void FloppyBird::Windowing::Window::InvokeOnResize(uint32_t w, uint32_t h) {

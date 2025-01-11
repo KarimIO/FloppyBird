@@ -83,7 +83,7 @@ void FloppyBird::Logger::Log(LogLevel level, LogSource source, const char* sourc
 	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 
 	SetConsoleTextAttribute(hConsole, consoleColor);
-	std::cout << formattedHeader;
+	std::cout << formattedHeader << ": ";
 	SetConsoleTextAttribute(hConsole, FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_RED);
 	std::cout << msg << '\n';
 
@@ -98,9 +98,6 @@ void FloppyBird::Logger::Log(LogLevel level, LogSource source, const char* sourc
 
 	if (level == LogLevel::Fatal) {
 #ifdef _MSC_VER
-		HWND hwnd = context.window != nullptr
-			? static_cast<FloppyBird::Windowing::WindowWin32*>(context.window)->GetHandle()
-			: NULL;
 		MessageBoxA(0, msg, formattedHeader.c_str(), MB_ICONERROR | MB_OK | MB_DEFAULT_DESKTOP_ONLY);
 #endif
 		DebugBreak();

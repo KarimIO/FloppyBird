@@ -39,6 +39,13 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam) 
 			case VK_ESCAPE:
 				::PostQuitMessage(0);
 				break;
+
+			case VK_F4:
+				if (alt) {
+					::PostQuitMessage(0);
+				}
+				break;
+
 			default:
 				window->InvokeOnKeypress(wParam);
 			}
@@ -182,7 +189,7 @@ FloppyBird::Windowing::WindowWin32::WindowWin32(HINSTANCE hInstance) : hinstance
 	auto windowClassName = L"FloppyBirdWindowClass";
 
 	RegisterWindowClass(hInstance, windowClassName);
-	hwnd = SetupWindow(windowClassName, hInstance, L"Floppy Bird", 640.0, 480.0);
+	hwnd = SetupWindow(windowClassName, hInstance, L"Floppy Bird", 640, 480);
 
 	window = this;
 }

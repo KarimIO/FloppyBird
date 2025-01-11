@@ -19,7 +19,7 @@ void FloppyBird::Gameplay::Scene::Initialize(FloppyBird::Graphics::DX::Context& 
 	float halfHoleSize = holeSize / 2.0f;
 	float margin = 20.0f;
 
-	float top = (480.0 / 2.0f) - halfHoleSize - margin;
+	float top = (480.0f / 2.0f) - halfHoleSize - margin;
 	float bottom = -top;
 
 	leftMostObstacleX = leftBorder;
@@ -35,7 +35,7 @@ void FloppyBird::Gameplay::Scene::Initialize(FloppyBird::Graphics::DX::Context& 
 	}
 }
 
-void FloppyBird::Gameplay::Scene::Update(double dt) {
+void FloppyBird::Gameplay::Scene::Update(float dt) {
 	bird.Update(dt);
 
 	float moveSpeed = 80.0f;

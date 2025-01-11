@@ -4,7 +4,7 @@ void FloppyBird::Gameplay::Bird::OnJump() {
     velocity.y = 200.0;
 }
 
-void FloppyBird::Gameplay::Bird::Update(double dt) {
+void FloppyBird::Gameplay::Bird::Update(float dt) {
     velocity.y -= dt * 400.0f;
     position.x += velocity.x * dt;
     position.y += velocity.y * dt;

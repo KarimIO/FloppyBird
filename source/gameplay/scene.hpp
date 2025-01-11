@@ -9,7 +9,7 @@ namespace FloppyBird::Gameplay {
 	class Scene {
 	public:
 		void Initialize(FloppyBird::Graphics::DX::Context& context);
-		void Update(double dt);
+		void Update(float dt);
 		const Bird& GetBird() const;
 		const Obstacle* GetObstacles() const;
 	protected:

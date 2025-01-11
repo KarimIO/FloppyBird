@@ -133,7 +133,7 @@ void UpdateRenderTargetViews(
 	}
 }
 
-bool FloppyBird::Graphics::DX::Context::Initialize(FloppyBird::Windowing::Window* window) {
+bool FloppyBird::Graphics::DX::Context::Initialize(FloppyBird::Windowing::Window* newWindow) {
 	adapter = FloppyBird::Graphics::DX::GetAdapter(false);
 	if (adapter == nullptr) {
 		return false;
@@ -144,7 +144,7 @@ bool FloppyBird::Graphics::DX::Context::Initialize(FloppyBird::Windowing::Window
 		return false;
 	}
 
-	this->window = window;
+	window = newWindow;
 	commandQueue = CreateCommandQueue(device, D3D12_COMMAND_LIST_TYPE_DIRECT);
 
 	window->SetOnResizeCallback(std::bind(&Context::OnResize, this, std::placeholders::_1, std::placeholders::_2));
@@ -182,6 +182,8 @@ bool FloppyBird::Graphics::DX::Context::Initialize(FloppyBird::Windowing::Window
 
 	fence = CreateFence(device);
 	fenceEvent = CreateEventHandle();
+
+	return true;
 }
 
 FloppyBird::Graphics::DX::Context::~Context() {
@@ -210,27 +212,27 @@ Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList> FloppyBird::Graphics::DX::Cont
 	return commandList;
 }
 
-void FloppyBird::Graphics::DX::Context::ClearBackbuffer(Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList> commandList, FLOAT clearColor[]) {
+void FloppyBird::Graphics::DX::Context::ClearBackbuffer(Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList> commandListToClear, FLOAT clearColor[]) {
 	CD3DX12_RESOURCE_BARRIER barrier = CD3DX12_RESOURCE_BARRIER::Transition(
 		backBuffers[currentBackBufferIndex].Get(),
 		D3D12_RESOURCE_STATE_PRESENT, D3D12_RESOURCE_STATE_RENDER_TARGET);
 
-	commandList->ResourceBarrier(1, &barrier);
+	commandListToClear->ResourceBarrier(1, &barrier);
 	D3D12_CPU_DESCRIPTOR_HANDLE rtv = GetCurrentRenderTargetView();
 
-	commandList->ClearRenderTargetView(rtv, clearColor, 0, nullptr);
+	commandListToClear->ClearRenderTargetView(rtv, clearColor, 0, nullptr);
 }
 
-void FloppyBird::Graphics::DX::Context::PresentCommandList(Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList> commandList) {
+void FloppyBird::Graphics::DX::Context::PresentCommandList(Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList> commandListToPresent) {
 	CD3DX12_RESOURCE_BARRIER barrier = CD3DX12_RESOURCE_BARRIER::Transition(
 		backBuffers[currentBackBufferIndex].Get(),
 		D3D12_RESOURCE_STATE_RENDER_TARGET, D3D12_RESOURCE_STATE_PRESENT);
-	commandList->ResourceBarrier(1, &barrier);
+	commandListToPresent->ResourceBarrier(1, &barrier);
 
-	FloppyBird::Utils::ThrowIfFailed(commandList->Close());
+	FloppyBird::Utils::ThrowIfFailed(commandListToPresent->Close());
 
 	ID3D12CommandList* const commandLists[] = {
-		commandList.Get()
+		commandListToPresent.Get()
 	};
 	commandQueue->ExecuteCommandLists(_countof(commandLists), commandLists);
 
