@@ -38,10 +38,10 @@ namespace FloppyBird::Logger {
 		LogSource source,
 		const char* sourcefile,
 		uint32_t line,
-		const char* fmtStr,
-		Args... formatItems
+		const std::format_string<Args...> fmt,
+		Args&&... args
 	) {
-		std::string formattedString = std::vformat(fmtStr, std::make_format_args(std::forward<Args>(formatItems)...));
+		std::string formattedString = std::vformat(fmt.get(), std::make_format_args(args...));
 		FloppyBird::Logger::Log(level, source, sourcefile, line, formattedString.c_str());
 	}
 }
