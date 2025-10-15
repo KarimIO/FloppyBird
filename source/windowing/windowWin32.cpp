@@ -176,6 +176,11 @@ HWND SetupWindow(
 		nullptr
 	);
 
+	HMENU hMenu = GetSystemMenu(hWnd, FALSE);
+	DeleteMenu(hMenu, SC_MAXIMIZE, MF_BYCOMMAND);
+
+	SetWindowLong(hWnd, GWL_STYLE, GetWindowLong(hWnd, GWL_STYLE) & ~WS_MAXIMIZEBOX);
+
 	if (hWnd == NULL) {
 		F_LOG_FATAL(FloppyBird::Logger::LogSource::Windows, "Failed to create a window.");
 	}

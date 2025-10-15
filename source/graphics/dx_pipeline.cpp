@@ -1,6 +1,5 @@
 ﻿#include <fstream>
 #include <directx/d3dx12.h>
-#include <dxcapi.h>
 
 #include <graphics/dx_context.hpp>
 #include <utils/logger.hpp>
